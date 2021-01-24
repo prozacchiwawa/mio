@@ -138,7 +138,7 @@ cfg_io_source! {
         Buffer: AFD_HELPER_NAME.as_ptr() as *mut _,
     };
 
-    const AFD_HELPER_NAME: &[WCHAR] = &[
+    const AFD_HELPER_NAME: &[WCHAR] = &[ // \Device\Afd\Endpoint is used in reactos' msafd (mostly compatible)
         '\\' as _,
         'D' as _,
         'e' as _,
@@ -151,9 +151,14 @@ cfg_io_source! {
         'f' as _,
         'd' as _,
         '\\' as _,
-        'M' as _,
+        'E' as _,
+        'n' as _,
+        'd' as _,
+        'p' as _,
+        'o' as _,
         'i' as _,
-        'o' as _
+        'n' as _,
+        't' as _
     ];
 
     static NEXT_TOKEN: AtomicUsize = AtomicUsize::new(0);
@@ -174,6 +179,7 @@ cfg_io_source! {
             };
 
             unsafe {
+                println!("About to create afd helper!");
                 let status = NtCreateFile(
                     &mut afd_helper_handle as *mut _,
                     SYNCHRONIZE,
